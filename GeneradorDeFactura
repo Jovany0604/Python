@@ -1,0 +1,61 @@
+# Instalar reportlab si deseas exportar a PDF (solo la primera vez)
+# Ipip install reportlab
+
+import json 
+import  csv
+from reportlab. lib.pagesizes import letter 
+from reportlab.pdfgen import canvas 
+from datetime import datetime
+
+def solicitar_detalles_compra():
+    nombre_cliente = input("Ingrese el nombre del cliente: ")
+    productos = []
+    while True:
+        nombre_producto = input("Ingrese el nombre del producto (o escribe 'fin' para terminar): ")
+        if nombre_producto.lower() == 'fin':
+            break
+        cantidad = int(input("Ingrese la cantidad: "))
+        precio_unitario = float(input("Ingrese el precio unitario: "))
+        productos.append((nombre_producto, cantidad, precio_unitario))
+    
+    descuento = float(input("Ingrese el descuento (en porcentaje, 0 si no hay descuento): "))
+    return nombre_cliente, productos, descuento
+
+def calcular_subtotal(productos):
+    return sum(cantidad * precio_unitario for _, cantidad, precio_unitario in productos)
+
+def calcular_descuento(subtotal, descuento):
+    return subtotal * (descuento / 100)
+
+def calcular_impuestos(subtotal):
+    iva = 0.16
+    return subtotal * iva
+
+def calcular_total(subtotal, descuento, impuestos):
+    return subtotal - descuento + impuestos
+
+def imprimir_factura(nombre_cliente, productos, subtotal, descuento, impuestos, total):
+    print("\n--- Factura ---")
+    print(f"Cliente: {nombre_cliente}")
+    print("\nDetalles de la compra:")
+    for producto, cantidad, precio_unitario in productos:
+        print(f"{producto} - {cantidad} x ${precio_unitario:.2f} = ${cantidad * precio_unitario:.2f}")
+    
+    print("\nResumen de la factura:")
+    print(f"Subtotal: ${subtotal:.2f}")
+    print(f"Descuento ({descuento:.2f}%): ${calcular_descuento(subtotal, descuento):.2f}")
+    print(f"Impuestos (IVA 16%): ${impuestos:.2f}")
+    print(f"Total a pagar: ${total:.2f}")
+    print("-------------------\n")
+
+def main():
+    nombre_cliente, productos, descuento = solicitar_detalles_compra()
+    subtotal = calcular_subtotal(productos)
+    descuento_aplicado = calcular_descuento(subtotal, descuento)
+    impuestos = calcular_impuestos(subtotal)
+    total = calcular_total(subtotal, descuento_aplicado, impuestos)
+    
+    imprimir_factura(nombre_cliente, productos, subtotal, descuento, impuestos, total)
+
+if __name__ == "__main__":
+    main()
