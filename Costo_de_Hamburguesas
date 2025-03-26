@@ -1,0 +1,36 @@
+#Calculate the selling price of a hamburger
+# Ingredient costs
+pan = 8  #Bimbo bread
+carne = 25  # Approximately 80 grams 
+queso = 7 # 2 slice of Cheese 
+jitomate = 3  # 3 slices of tomato 
+lechuga = 15  # 2 lettuce leaves 
+cebolla = 2.5  # 1 slices of onion 
+catsup = 0.88  # 20 grams of Clemente Jacques ketchup 
+mayonesa = 1.50  # 15 grams of McCormick mayonnaise
+ 
+
+# Fixed costs
+empaquetado = 10
+energia = 50
+mano_obra = 20
+renta = 3500  # Monthly rent
+
+# Estimated monthly hamburger sales
+hamburguesas_al_mes = 450  # Now 450 hamburgers are sold per month
+renta_por_hamburguesa = renta / hamburguesas_al_mes  # Rental cost per hamburger
+
+# Calculation of the total cost for each hamburger
+costo_total = (pan + carne + queso + jitomate + lechuga + cebolla +
+               catsup + mayonesa + mostaza + empaque + energia +
+               mano_obra + renta_por_hamburguesa)
+
+# Desired profit margin (percentage)
+margen_ganancia = 60  # 60% profit
+
+# Final sale price
+precio_venta = costo_total * (1 + margen_ganancia / 100)
+
+# Result
+print(f"Costo total por hamburguesa: ${costo_total:.2f}")
+print(f"Precio de venta con {margen_ganancia}% de ganancia: ${precio_venta:.2f}")
